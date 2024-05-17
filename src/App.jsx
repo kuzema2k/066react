@@ -1,0 +1,1 @@
+import './App.css'; function App() {return (<p>привет react</p>)}; export default App;
