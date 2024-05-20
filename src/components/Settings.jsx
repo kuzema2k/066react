@@ -10,7 +10,6 @@ const TableRow = (props) => {
 
 export const Settings = (props) => {
   let users = props.function();
-  console.log(users);
   let usersCount = Object.keys(users).length;
   let userRow = [];
   for (let i = 0; i < usersCount; i++) {
