@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 const TableRow = (props) => {
@@ -15,29 +16,58 @@ const TableRow = (props) => {
   );
 }
 
-
-export const Settings = (props) => {
-  let users = props.function();
-  let usersCount = Object.keys(users).length;
-  let userRow = [];
-  for (let i = 0; i < usersCount; i++) {
-    userRow.push(<TableRow name={users[i].name} lastname={users[i].lastname} index={i} key={i} email={users[i].email} id={users[i].id}/>);
+export class Settings extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { userRow: [] };
   }
-  return (
-    <div className="row">
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Имя и фамилия</th>
-            <th scope="col">Email</th>
-            <th scope="col">Id</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userRow}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+  
+  componentDidMount() {
+    this.props.function().then((users) => {
+      let usersCount = users.length;
+      let userRow = [];
+      for (let i = 0; i < usersCount; i++) {
+        userRow.push(
+          <TableRow
+            name={users[i].name}
+            lastname={users[i].lastname}
+            index={i}
+            key={i}
+            email={users[i].email}
+            id={users[i].id}
+          />
+        );
+      }
+      this.setState({userRow: userRow})
+    });
+  }
+
+  render () {
+    return (
+      <div className="row">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Имя и фамилия</th>
+              <th scope="col">Email</th>
+              <th scope="col">Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.userRow}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
+
+// export const Settings = (props) => {
+//   let users = props.function();
+//   let usersCount = Object.keys(users).length;
+//   let userRow = [];
+//   for (let i = 0; i < usersCount; i++) {
+//     userRow.push(<TableRow name={users[i].name} lastname={users[i].lastname} index={i} key={i} email={users[i].email} id={users[i].id}/>);
+//   }
+// };
